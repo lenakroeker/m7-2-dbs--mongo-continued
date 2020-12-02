@@ -7,5 +7,9 @@ desktop.ini
 .Spotlight-V100
 .Trashes
 ._*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 node_modules/

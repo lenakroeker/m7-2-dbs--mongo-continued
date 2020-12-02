@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export const SeatContext = React.createContext();
 
@@ -11,16 +11,21 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'receive-seat-info-from-server': {
+    case "receive-seat-info-from-server": {
+      const seatsObject = {};
+      action.data.seats.forEach((seat) => {
+        seatsObject[seat._id] = seat;
+      });
+      console.log(action);
       return {
         ...state,
         hasLoaded: true,
-        seats: action.seats,
-        numOfRows: action.numOfRows,
-        seatsPerRow: action.seatsPerRow,
+        seats: seatsObject,
+        numOfRows: action.data.numOfRows,
+        seatsPerRow: action.data.seatsPerRow,
       };
     }
-    case 'mark-seat-as-purchased': {
+    case "mark-seat-as-purchased": {
       return {
         ...state,
         seats: {
@@ -43,7 +48,7 @@ export const SeatProvider = ({ children }) => {
   const receiveSeatInfoFromServer = React.useCallback(
     (data) =>
       dispatch({
-        type: 'receive-seat-info-from-server',
+        type: "receive-seat-info-from-server",
         ...data,
       }),
     [dispatch]
@@ -52,7 +57,7 @@ export const SeatProvider = ({ children }) => {
   const markSeatAsPurchased = React.useCallback(
     (seatId) =>
       dispatch({
-        type: 'mark-seat-as-purchased',
+        type: "mark-seat-as-purchased",
         seatId,
       }),
     [dispatch]
